@@ -6,6 +6,7 @@
   --border: #e3e5ee;
   --accent: #4f46e5;
   --accent-hover: #4338ca;
+  --on-accent: #ffffff;
   --accent-soft: #eef0ff;
   --danger: #d93a3a;
   --warning-bg: #fff4e0;
@@ -22,6 +23,7 @@
     --border: #2c2f3d;
     --accent: #818cf8;
     --accent-hover: #a5b4fc;
+    --on-accent: #12131a;
     --accent-soft: #262a45;
     --danger: #f07070;
     --warning-bg: #3a2f17;
@@ -87,7 +89,7 @@ body {
   border: 0;
   border-radius: 10px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -184,6 +186,13 @@ body {
   opacity: 1;
 }
 
+/* Touch screens have no hover, so the delete button stays fully visible. */
+@media (hover: none) {
+  .task__remove {
+    opacity: 1;
+  }
+}
+
 .task__remove:hover {
   color: var(--danger);
   background: var(--accent-soft);
@@ -207,8 +216,12 @@ body {
   color: var(--muted);
 }
 
+/* All three controls do not fit one row, so filters get their own row below. */
 .filters {
+  order: 1;
+  flex-basis: 100%;
   display: flex;
+  justify-content: center;
   gap: 4px;
 }
 
@@ -255,9 +268,5 @@ button:focus-visible {
 @media (max-width: 480px) {
   .app {
     padding-top: 32px;
-  }
-
-  .list-footer {
-    justify-content: center;
   }
 }
