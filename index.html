@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Список задач</title>
+  <meta name="description" content="Простой список задач с сохранением в браузере">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11.5' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>Список задач</h1>
+      <p class="app__subtitle">Задачи сохраняются в этом браузере</p>
+    </header>
+
+    <form id="new-task-form" class="new-task" autocomplete="off">
+      <label for="new-task-input" class="visually-hidden">Новая задача</label>
+      <input id="new-task-input" class="new-task__input" type="text" placeholder="Что нужно сделать?" required>
+      <button type="submit" class="new-task__button">Добавить</button>
+    </form>
+
+    <p id="storage-warning" class="warning" role="status" hidden>
+      Браузер не дает сохранить задачи, после обновления страницы они пропадут.
+    </p>
+
+    <section class="card" aria-label="Задачи">
+      <ul id="task-list" class="task-list"></ul>
+      <p id="empty-state" class="empty">Задач пока нет. Добавьте первую.</p>
+
+      <footer id="list-footer" class="list-footer" hidden>
+        <span id="counter" class="counter" aria-live="polite"></span>
+        <div class="filters" role="group" aria-label="Фильтр задач">
+          <button type="button" class="filter filter--active" data-filter="all" aria-pressed="true">Все</button>
+          <button type="button" class="filter" data-filter="active" aria-pressed="false">Активные</button>
+          <button type="button" class="filter" data-filter="done" aria-pressed="false">Выполненные</button>
+        </div>
+        <button type="button" id="clear-done" class="clear">Удалить выполненные</button>
+      </footer>
+    </section>
+  </main>
+
+  <script src="todo-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
