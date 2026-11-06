@@ -4,6 +4,8 @@
 
 Сайт: https://nata2627.github.io/todo-list/
 
+<img src="docs/screenshot-laptop.png" alt="Список задач на ноутбуке" width="600"> <img src="docs/screenshot-phone.png" alt="Список задач на телефоне" width="200">
+
 ## Что умеет
 
 - добавить задачу (Enter или кнопка «Добавить»); пустая строка и строка из пробелов не добавляются, текст обрезается до 200 символов;
