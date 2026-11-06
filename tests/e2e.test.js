@@ -151,3 +151,36 @@ test('opens with corrupted storage', async () => {
   assert.deepEqual(errors, []);
   await close();
 });
+
+test('works and warns when storage is blocked', async () => {
+  const context = await browser.newContext();
+  await context.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      get() { throw new DOMException('denied', 'SecurityError'); },
+    });
+  });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(baseUrl);
+  assert.ok(await page.locator('#storage-warning').isVisible());
+  await addTask(page, 'без хранилища');
+  assert.deepEqual(await titles(page), ['без хранилища']);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('long text and many tasks fit a phone screen', async () => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const page = await context.newPage();
+  await page.goto(baseUrl);
+  await addTask(page, 'x'.repeat(300));
+  for (let i = 1; i <= 50; i++) await addTask(page, 'Задача ' + i);
+  assert.equal((await titles(page))[0].length, 200);
+  assert.equal(await counter(page), 'Осталось 51 задача');
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  assert.equal(overflow, 0);
+  const opacity = await page.locator('.task__remove').first().evaluate(el => getComputedStyle(el).opacity);
+  assert.equal(opacity, '1');
+  await context.close();
+});
