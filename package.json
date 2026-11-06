@@ -1,0 +1,14 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Список задач на чистом HTML, CSS и JavaScript",
+  "scripts": {
+    "test": "node --test tests/todo-core.test.js",
+    "e2e": "node --test tests/e2e.test.js",
+    "check": "npm test && npm run e2e"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
